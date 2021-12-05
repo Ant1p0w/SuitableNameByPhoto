@@ -13,6 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [\App\Http\Controllers\PhotoTaskController::class, 'getTask']);
+Route::post('/', [\App\Http\Controllers\PhotoController::class, 'create']);
