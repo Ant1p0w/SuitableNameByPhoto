@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PhotoRequest;
+use App\Jobs\DoPhotoTask;
 use App\Models\Photo;
 
 class PhotoController extends Controller
@@ -21,6 +22,8 @@ class PhotoController extends Controller
         if(is_null($photo->photo_task)){
             $photo->photo_task()->create(['status' => 'received']);
             $photo->load('photo_task');
+
+            DoPhotoTask::dispatch($photo->photo_task);
         }
 
         return [
