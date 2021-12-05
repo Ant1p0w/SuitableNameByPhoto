@@ -14,15 +14,18 @@ class PhotoController extends Controller
         $fileMd5 = md5($request->file('photo')->getContent());
         $path = $request->file('photo')->store('storage/uploads');
 
+        //Создаем или находим запись
         $photo = Photo::firstOrCreate(
             ['user_name' => $validated['name'], 'file_md5' => $fileMd5],
             ['user_name' => $validated['name'], 'file_md5' => $fileMd5, 'file_name' => $path]
         )->load('photo_task');
 
+        //Создаем запись результата
         if(is_null($photo->photo_task)){
             $photo->photo_task()->create(['status' => 'received']);
             $photo->load('photo_task');
 
+            //Ставим задачу в очередь на обработку
             DoPhotoTask::dispatch($photo->photo_task);
         }
 
