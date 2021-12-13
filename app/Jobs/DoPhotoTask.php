@@ -36,7 +36,7 @@ class DoPhotoTask implements ShouldQueue
     {
         //Если у задачи есть retry_id, то запрашиваем по нему
        if($this->photoTask->retry_id){
-           $response = Http::post('http://merlinface.com:12345/api/', [
+           $response = Http::asForm()->post('http://merlinface.com:12345/api/', [
                'retry_id' => $this->photoTask->retry_id,
            ])->json();
        }else{

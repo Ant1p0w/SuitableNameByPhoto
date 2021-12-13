@@ -17,7 +17,7 @@ class CreatePhotoTasksTable extends Migration
             $table->id();
             $table->string('status');
             $table->float('result')->nullable();
-            $table->float('retry_id')->nullable();
+            $table->string('retry_id')->nullable();
             $table->bigInteger('photo_id');
             $table->timestamps();
             $table->index(['photo_id']);
